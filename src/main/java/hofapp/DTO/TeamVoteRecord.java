@@ -53,28 +53,27 @@ public class TeamVoteRecord {
                 .map(isCorrect -> isCorrect ? "green" : "red").orElse("yellow");
     }
 
-    public int getPlayerScore(Integer playerId) {
-        Optional<Boolean> playerIsCorrect = isVoteCorrectForPlayer(playerId);
-
-        return playerIsCorrect.map(isCorrect ->
-                isCorrect ?
-                        votes.get(playerId).getCorrectValue() :
-                        votes.get(playerId).getIncorrectValue())
-                .orElse(0);
+    public double getPlayerScore(Integer playerId) {
+        switch (votes.get(playerId).getVoteName()) {
+            case "OVER LOCK":
+                return liveTeamRecord.getOverLockScore();
+            case "UNDER LOCK":
+                return liveTeamRecord.getUnderLockScore();
+            case "UNDER":
+                return liveTeamRecord.getUnderScore();
+            case "OVER":
+                return liveTeamRecord.getOverScore();
+            default:
+                return 0;
+        }
     }
 
-    public int getPlayerCertainScore(Integer playerId) {
-        Optional<Boolean> playerIsCorrect = isVoteCorrectForPlayer(playerId);
-
-        if(!playerIsCorrect.isPresent() || !(liveTeamRecord.isOverImpossible() || liveTeamRecord.isUnderImpossible())) {
+    public double getPlayerCertainScore(Integer playerId) {
+        if(!liveTeamRecord.isOverImpossible() || !liveTeamRecord.isUnderImpossible()) {
             return 0;
         }
 
-        return playerIsCorrect.map(isCorrect ->
-                isCorrect ?
-                        votes.get(playerId).getCorrectValue() :
-                        votes.get(playerId).getIncorrectValue())
-                .orElse(0);
+        return getPlayerScore(playerId);
     }
 
     public boolean isOver() {

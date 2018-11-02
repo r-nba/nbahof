@@ -37,13 +37,13 @@ public class LiveTeamRecordService {
 
         RestTemplate restTemplate = new RestTemplate();
         LiveTeamRecords liveTeamRecords = restTemplate.getForObject(
-                "http://mattandsam.herokuapp.com/scrape/year/" + year + "/month/" + month + "/day/" + day,
+                "https://nbahof-api.herokuapp.com/scrape/year/" + year + "/month/" + month + "/day/" + day,
                 LiveTeamRecords.class);
 
         //Method so good we call it twice...
         if(liveTeamRecords.getValues() == null){
             liveTeamRecords = restTemplate.getForObject(
-                    "http://mattandsam.herokuapp.com/scrape/year/" + year + "/month/" + month + "/day/" + day,
+                    "https://nbahof-api.herokuapp.com/scrape/year/" + year + "/month/" + month + "/day/" + day,
                     LiveTeamRecords.class);
         }
 

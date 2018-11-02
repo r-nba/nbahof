@@ -17,6 +17,10 @@ public class LiveTeamRecord {
     private boolean isUnderImpossible;
     private boolean isOverImpossible;
     private String lastYearsRecord;
+    private double overScore;
+    private double underScore;
+    private double underLockScore;
+    private double overLockScore;
 
     public double getOverUnder() {
         return overUnder;
@@ -102,4 +106,35 @@ public class LiveTeamRecord {
         return isUnderImpossible() ? "over-hit" : isOverImpossible() ? "under-hit" : "normal";
     }
 
+    public double getUnderLockScore() {
+        return underLockScore;
+    }
+
+    public void setUnderLockScore(double underLockScore) {
+        this.underLockScore = underLockScore;
+    }
+
+    public double getOverLockScore() {
+        return overLockScore;
+    }
+
+    public void setOverLockScore(double overLockScore) {
+        this.overLockScore = overLockScore;
+    }
+
+    public double getUnderScore() {
+        return underScore;
+    }
+
+    public void setUnderScore(double underScore) {
+        this.underScore = underScore;
+    }
+
+    public double getOverScore() {
+        return overScore;
+    }
+
+    public void setOverScore(double overScore) {
+        this.overScore = overScore;
+    }
 }

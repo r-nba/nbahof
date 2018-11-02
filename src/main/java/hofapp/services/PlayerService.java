@@ -17,13 +17,20 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public List<PlayerWithScore> getSortedPlayersWithScores(TeamVoteRecords teamVoteRecords) {
-        List<PlayerWithScore> playerWithScores = getAllPlayersWithScores(teamVoteRecords);
-        return playerWithScores.stream().sorted(Comparator.comparingInt(player -> player.getScore()*-1)).collect(Collectors.toList());
+    public List<PlayerWithScore> getSortedPlayersWithScores(TeamVoteRecords teamVoteRecords, List<String> players) {
+        List<PlayerWithScore> playerWithScores = players.size() > 0
+                ? getFilteredPlayerWithScore(teamVoteRecords, players)
+                : getAllPlayersWithScores(teamVoteRecords);
+        return playerWithScores.stream().sorted(Comparator.comparingDouble(player -> player.getScore()*-1)).collect(Collectors.toList());
     }
 
     private List<PlayerWithScore> getAllPlayersWithScores(TeamVoteRecords teamVoteRecords) {
         Iterable<Player> players  = playerRepository.findAll();
+        return scorePlayers(players, teamVoteRecords);
+    }
+
+    private List<PlayerWithScore> getFilteredPlayerWithScore(TeamVoteRecords teamVoteRecords, List<String> playerNames) {
+        Iterable<Player> players = playerRepository.findAllByFirstNameIn(playerNames);
         return scorePlayers(players, teamVoteRecords);
     }
 
@@ -34,12 +41,12 @@ public class PlayerService {
     }
 
     private PlayerWithScore scorePlayer(TeamVoteRecords teamVoteRecords, Player player) {
-        int score = teamVoteRecords.getValues().entrySet().stream()
-                .mapToInt(team -> team.getValue().getPlayerScore(player.getId()))
+        double score = teamVoteRecords.getValues().entrySet().stream()
+                .mapToDouble(team -> team.getValue().getPlayerScore(player.getId()))
                 .sum();
 
-        int certainScore = teamVoteRecords.getValues().entrySet().stream()
-                .mapToInt(team -> team.getValue().getPlayerCertainScore(player.getId()))
+        double certainScore = teamVoteRecords.getValues().entrySet().stream()
+                .mapToDouble(team -> team.getValue().getPlayerCertainScore(player.getId()))
                 .sum();
 
         return new PlayerWithScore(player, score, certainScore);
