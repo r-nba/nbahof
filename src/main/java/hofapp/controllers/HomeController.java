@@ -32,6 +32,7 @@ public class HomeController {
         players = (players != null) ? players : new ArrayList<>();
         model.addAttribute("players", playerService.getSortedPlayersWithScores(teamRecords, players));
         model.addAttribute("liveTeamRecords", teamRecords);
+        model.addAttribute("teams", teamRecords.getValues().keySet());
         return "home";
     }
 

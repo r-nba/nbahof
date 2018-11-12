@@ -21,6 +21,16 @@ public class Team {
 
     private String teamName;
 
+    private String tla;
+
+    public String getTla() {
+        return tla;
+    }
+
+    public void setTla(String tla) {
+        this.tla = tla;
+    }
+
     public String getTeamName() {
         return teamName;
     }
