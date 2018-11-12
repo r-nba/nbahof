@@ -1,4 +1,0 @@
-hofapp\controllers\HomeController.class
-hofapp\models\Player.class
-hofapp\repositories\PlayerRepository.class
-hofapp\Application.class

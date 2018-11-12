@@ -30,6 +30,7 @@ public class HomeController {
                         ) {
         TeamVoteRecords teamRecords = liveTeamRecordService.getAllLiveTeamRecords(year, month, day);
         players = (players != null) ? players : new ArrayList<>();
+
         model.addAttribute("players", playerService.getSortedPlayersWithScores(teamRecords, players));
         model.addAttribute("liveTeamRecords", teamRecords);
         model.addAttribute("teams", teamRecords.getValues().keySet());

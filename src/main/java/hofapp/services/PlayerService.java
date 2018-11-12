@@ -1,7 +1,7 @@
 package hofapp.services;
 
-import hofapp.DTO.TeamVoteRecords;
 import hofapp.DTO.PlayerWithScore;
+import hofapp.DTO.TeamVoteRecords;
 import hofapp.models.Player;
 import hofapp.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ public class PlayerService {
 
     public List<PlayerWithScore> getSortedPlayersWithScores(TeamVoteRecords teamVoteRecords, List<String> players) {
         List<PlayerWithScore> playerWithScores = players.size() > 0
-                ? getFilteredPlayerWithScore(teamVoteRecords, players)
+                ? getFilteredPlayerWithScore(teamVoteRecords, players.stream().limit(20).collect(Collectors.toList()))
                 : getAllPlayersWithScores(teamVoteRecords);
-        return playerWithScores.stream().sorted(Comparator.comparingDouble(player -> player.getScore()*-1)).collect(Collectors.toList());
+        return playerWithScores.stream().sorted(Comparator.comparingDouble(player -> player.getScore()*-1)).limit(20).collect(Collectors.toList());
     }
 
     private List<PlayerWithScore> getAllPlayersWithScores(TeamVoteRecords teamVoteRecords) {
