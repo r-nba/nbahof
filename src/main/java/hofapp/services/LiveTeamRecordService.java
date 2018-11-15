@@ -5,6 +5,8 @@ import hofapp.DTO.TeamVoteRecords;
 import hofapp.models.Vote;
 import hofapp.repositories.VoteRepository;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -46,7 +48,6 @@ public class LiveTeamRecordService {
                     "https://nbahof-api.herokuapp.com/scrape/year/" + year + "/month/" + month + "/day/" + day,
                     LiveTeamRecords.class);
         }
-
 
         return decorateLiveTeamRecordsWithVotes(liveTeamRecords);
     }

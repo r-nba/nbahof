@@ -1,6 +1,7 @@
 package hofapp.DTO;
 
 import hofapp.models.Vote;
+import org.joda.time.LocalDate;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -14,7 +15,9 @@ public class TeamVoteRecords {
     private final LinkedHashMap<String, TeamVoteRecord> valuesThatHaventFinished;
     private Map<String, TeamVoteRecord> values;
 
+
     public TeamVoteRecords(LiveTeamRecords liveTeamRecords) {
+
         values = liveTeamRecords.getValues().entrySet().stream()
                 .sorted(Comparator.comparing(entry -> entry.getValue().getPythagTotalWins() != null ? -1 * entry.getValue().getPythagTotalWins() : 0))
                 .collect(Collectors.toMap(Map.Entry::getKey,

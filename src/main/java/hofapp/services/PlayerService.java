@@ -7,17 +7,20 @@ import hofapp.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    private List<Player> cachedPlayers;
+
     public List<PlayerWithScore> getSortedPlayersWithScores(TeamVoteRecords teamVoteRecords, List<String> players) {
+        populateCacheIfEmpty();
         List<PlayerWithScore> playerWithScores = players.size() > 0
                 ? getFilteredPlayerWithScore(teamVoteRecords, players.stream().limit(20).collect(Collectors.toList()))
                 : getAllPlayersWithScores(teamVoteRecords);
@@ -25,18 +28,24 @@ public class PlayerService {
     }
 
     private List<PlayerWithScore> getAllPlayersWithScores(TeamVoteRecords teamVoteRecords) {
-        Iterable<Player> players  = playerRepository.findAll();
-        return scorePlayers(players, teamVoteRecords);
+        return scorePlayers(cachedPlayers, teamVoteRecords);
     }
 
     private List<PlayerWithScore> getFilteredPlayerWithScore(TeamVoteRecords teamVoteRecords, List<String> playerNames) {
-        Iterable<Player> players = playerRepository.findAllByFirstNameIn(playerNames);
+        List<Player> players = cachedPlayers.stream().filter(player -> playerNames.contains(player.getFirstName()))
+                .collect(Collectors.toList());
         return scorePlayers(players, teamVoteRecords);
     }
 
-    private List<PlayerWithScore> scorePlayers(Iterable<Player> players, TeamVoteRecords teamVoteRecords) {
-        return StreamSupport.stream(players.spliterator(), false)
-                .map(player -> scorePlayer(teamVoteRecords, player))
+    private synchronized void populateCacheIfEmpty() {
+        if(cachedPlayers == null) {
+            cachedPlayers = new ArrayList<>();
+            playerRepository.findAll().forEach(cachedPlayers::add);
+        }
+    }
+
+    private List<PlayerWithScore> scorePlayers(List<Player> players, TeamVoteRecords teamVoteRecords) {
+        return players.stream().map(player -> scorePlayer(teamVoteRecords, player))
                 .collect(Collectors.toList());
     }
 

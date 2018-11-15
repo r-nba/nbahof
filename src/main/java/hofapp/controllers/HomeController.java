@@ -3,6 +3,7 @@ package hofapp.controllers;
 import hofapp.DTO.TeamVoteRecords;
 import hofapp.services.LiveTeamRecordService;
 import hofapp.services.PlayerService;
+import hofapp.services.ScoreCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class HomeController {
     @Autowired
     private LiveTeamRecordService liveTeamRecordService;
 
+    @Autowired
+    private ScoreCacheService scoreCacheService;
+
     @RequestMapping("/")
     public String index(Model model,
                         @RequestParam(value = "year", required = false) String year,
@@ -28,12 +32,8 @@ public class HomeController {
                         @RequestParam(value = "day", required = false) String day,
                         @RequestParam(value = "players", required = false) List<String> players
                         ) {
-        TeamVoteRecords teamRecords = liveTeamRecordService.getAllLiveTeamRecords(year, month, day);
         players = (players != null) ? players : new ArrayList<>();
-
-        model.addAttribute("players", playerService.getSortedPlayersWithScores(teamRecords, players));
-        model.addAttribute("liveTeamRecords", teamRecords);
-        model.addAttribute("teams", teamRecords.getValues().keySet());
+        scoreCacheService.getResultsModel(model, year, month, day, players);
         return "home";
     }
 

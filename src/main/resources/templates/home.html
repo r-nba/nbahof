@@ -56,7 +56,8 @@
                 <tr th:each="player : ${players}">
                     <td th:text="${player.getFirstName()}"></td>
                     <td th:text="${player.getCombinedScore()}"></td>
-                    <td th:each="team : ${teams}" th:text="${liveTeamRecords.getValues().get(team).getPlayerScore(player.getId())}"
+                    <td th:each="team : ${teams}"
+                        th:text="${liveTeamRecords.getValues().get(team).getVotes().get(player.getId()).displayName+' ('+liveTeamRecords.getValues().get(team).getPlayerScore(player.getId())+')'}"
                         th:attrappend="class=${liveTeamRecords.getValues().get(team).getCorrectnessColour(player.id)}">
                     </td>
                 </tr>
