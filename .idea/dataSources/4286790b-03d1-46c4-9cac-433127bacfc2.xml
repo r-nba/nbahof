@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="PostgreSQL - postgres@localhost">
-  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.0">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.11">
     <root id="1"/>
     <database id="2" parent="1" name="NbaHof">
       <ObjectId>16393</ObjectId>
@@ -44,20 +44,20 @@
     </table>
     <column id="12" parent="10" name="id">
       <Position>1</Position>
-      <DataType>integer|0</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>546</StateNumber>
       <DefaultExpression>nextval(&apos;player_id_seq&apos;::regclass)</DefaultExpression>
     </column>
     <column id="13" parent="10" name="first_name">
       <Position>2</Position>
-      <DataType>varchar(100)|0</DataType>
+      <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>546</StateNumber>
     </column>
     <column id="14" parent="10" name="last_name">
       <Position>3</Position>
-      <DataType>varchar(100)|0</DataType>
+      <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>546</StateNumber>
     </column>
@@ -74,60 +74,60 @@
     </key>
     <column id="17" parent="11" name="installed_rank">
       <Position>1</Position>
-      <DataType>integer|0</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
     <column id="18" parent="11" name="version">
       <Position>2</Position>
-      <DataType>varchar(50)|0</DataType>
+      <DataType>varchar(50)|0s</DataType>
       <StateNumber>545</StateNumber>
     </column>
     <column id="19" parent="11" name="description">
       <Position>3</Position>
-      <DataType>varchar(200)|0</DataType>
+      <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
     <column id="20" parent="11" name="type">
       <Position>4</Position>
-      <DataType>varchar(20)|0</DataType>
+      <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
     <column id="21" parent="11" name="script">
       <Position>5</Position>
-      <DataType>varchar(1000)|0</DataType>
+      <DataType>varchar(1000)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
     <column id="22" parent="11" name="checksum">
       <Position>6</Position>
-      <DataType>integer|0</DataType>
+      <DataType>integer|0s</DataType>
       <StateNumber>545</StateNumber>
     </column>
     <column id="23" parent="11" name="installed_by">
       <Position>7</Position>
-      <DataType>varchar(100)|0</DataType>
+      <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
     <column id="24" parent="11" name="installed_on">
       <Position>8</Position>
-      <DataType>timestamp|0</DataType>
+      <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
       <DefaultExpression>now()</DefaultExpression>
     </column>
     <column id="25" parent="11" name="execution_time">
       <Position>9</Position>
-      <DataType>integer|0</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
     <column id="26" parent="11" name="success">
       <Position>10</Position>
-      <DataType>boolean|0</DataType>
+      <DataType>boolean|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>545</StateNumber>
     </column>
